@@ -1,5 +1,3 @@
-Berikut adalah contoh README yang lengkap untuk proyek ini:
-
 # exam-mobile-programming
 
 Aplikasi mobile sederhana yang menampilkan daftar pengguna dan detail pengguna menggunakan React Native dan Expo.
