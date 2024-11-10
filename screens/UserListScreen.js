@@ -1,13 +1,7 @@
 import React, { useEffect, useState } from "react";
-import {
-  View,
-  Text,
-  FlatList,
-  Image,
-  TouchableOpacity,
-  StyleSheet,
-} from "react-native";
+import { FlatList, StyleSheet, View } from "react-native";
 import { useNavigation } from "@react-navigation/native";
+import { Card, Avatar, Text } from "react-native-paper";
 
 export default function UserListScreen() {
   const [users, setUsers] = useState([]);
@@ -21,32 +15,41 @@ export default function UserListScreen() {
   }, []);
 
   const renderUser = ({ item }) => (
-    <View style={styles.userContainer}>
-      <Image
-        source={{ uri: "https://via.placeholder.com/50" }}
-        style={styles.thumbnail}
+    <Card
+      style={styles.card}
+      onPress={() => navigation.navigate("Detail", { item: item })}
+    >
+      <Card.Title
+        titleVariant="titleLarge"
+        title={item.name}
+        left={(props) => (
+          <Avatar.Image
+            {...props}
+            source={require("../assets/avatar.png")}
+            style={{
+              backgroundColor: "transparent",
+            }}
+          />
+        )}
       />
-      <View style={styles.infoContainer}>
-        <Text style={styles.name}>{item.name}</Text>
-        <Text>ID: {item.id}</Text>
-        <Text>Username: {item.username}</Text>
-        <Text>Email: {item.email}</Text>
-        <TouchableOpacity
-          onPress={() =>
-            navigation.navigate("Map", {
-              lat: item.address.geo.lat,
-              lng: item.address.geo.lng,
-              name: item.name,
-            })
-          }
-        >
-          <Text style={styles.address}>
-            Address: {item.address.street}, {item.address.city},{" "}
-            {item.address.zipcode}
-          </Text>
-        </TouchableOpacity>
-      </View>
-    </View>
+      <Card.Content>
+        <View style={{ flexDirection: "row", marginBottom: 10 }}>
+          <View style={{ flex: 0.7 }}>
+            <Text>Username</Text>
+            <Text style={styles.desc}>{item.username}</Text>
+          </View>
+          <View style={{ flex: 1 }}>
+            <Text>Email</Text>
+            <Text style={styles.desc}>{item.email}</Text>
+          </View>
+        </View>
+        <Text>Address</Text>
+        <Text style={styles.desc}>
+          {item.address.street}, {item.address.suite}, {item.address.city},{" "}
+          {item.address.zipcode}
+        </Text>
+      </Card.Content>
+    </Card>
   );
 
   return (
@@ -60,10 +63,7 @@ export default function UserListScreen() {
 }
 
 const styles = StyleSheet.create({
-  container: { padding: 10 },
-  userContainer: { flexDirection: "row", marginBottom: 20 },
-  thumbnail: { width: 50, height: 50, marginRight: 10 },
-  infoContainer: { flex: 1 },
-  name: { fontWeight: "bold", fontSize: 16 },
-  address: { color: "blue", textDecorationLine: "underline" },
+  desc: { fontSize: 14, fontFamily: "Poppins-Medium" },
+  container: { padding: 16 },
+  card: { marginBottom: 16, backgroundColor: "#f9f9f9", fontFamily: "Poppins" },
 });
