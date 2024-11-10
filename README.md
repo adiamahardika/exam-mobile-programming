@@ -26,7 +26,7 @@ npm install
 3. Jalankan aplikasi:
 
 ```sh
-npm start
+npx expo start
 ```
 
 ## Penggunaan
